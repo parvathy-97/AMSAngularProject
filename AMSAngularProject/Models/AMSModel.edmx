@@ -1,0 +1,626 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AMSAngularModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblAssetDefinition">
+          <Key>
+            <PropertyRef Name="assetId" />
+          </Key>
+          <Property Name="assetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="assetName" Type="varchar" MaxLength="30" />
+          <Property Name="assetType" Type="int" />
+          <Property Name="assetClass" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="tblAssetMaster">
+          <Key>
+            <PropertyRef Name="assetMasterId" />
+          </Key>
+          <Property Name="assetMasterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="assetType" Type="int" />
+          <Property Name="make" Type="int" />
+          <Property Name="assetName" Type="int" />
+          <Property Name="model" Type="varchar" MaxLength="40" />
+          <Property Name="serialnumber" Type="varchar" MaxLength="20" />
+          <Property Name="makeYear" Type="date" />
+          <Property Name="purchaseDate" Type="date" />
+          <Property Name="warranty" Type="varchar" MaxLength="1" />
+          <Property Name="warrantyFrom" Type="date" />
+          <Property Name="warrantyTo" Type="date" />
+        </EntityType>
+        <EntityType Name="tblAssetType">
+          <Key>
+            <PropertyRef Name="assetTypeId" />
+          </Key>
+          <Property Name="assetTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="assetTypeName" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="tblLogin">
+          <Key>
+            <PropertyRef Name="loginId" />
+          </Key>
+          <Property Name="loginId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" />
+          <Property Name="password" Type="varchar" MaxLength="20" />
+          <Property Name="usertype" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tblPurchase">
+          <Key>
+            <PropertyRef Name="purchaseId" />
+          </Key>
+          <Property Name="purchaseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="purchaseOrderNo" Type="varchar" MaxLength="10" />
+          <Property Name="purchaseAssetName" Type="int" />
+          <Property Name="purchaseAssetType" Type="int" />
+          <Property Name="quantity" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="purchaseVendorName" Type="int" />
+          <Property Name="purchaseDate" Type="date" />
+          <Property Name="purchaseDelivDate" Type="date" />
+          <Property Name="purchaseStatus" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblUserReg">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="20" />
+          <Property Name="lastName" Type="varchar" MaxLength="20" />
+          <Property Name="age" Type="int" />
+          <Property Name="gender" Type="varchar" MaxLength="20" />
+          <Property Name="address" Type="varchar" MaxLength="20" />
+          <Property Name="regId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblVendor">
+          <Key>
+            <PropertyRef Name="vendorId" />
+          </Key>
+          <Property Name="vendorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vendorName" Type="varchar" MaxLength="50" />
+          <Property Name="vendorType" Type="varchar" MaxLength="50" />
+          <Property Name="vendorAssetType" Type="int" />
+          <Property Name="validFrom" Type="date" />
+          <Property Name="vaildTo" Type="date" />
+          <Property Name="vendorAddress" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__tblAssetD__asset__145C0A3F">
+          <End Role="tblAssetType" Type="Self.tblAssetType" Multiplicity="0..1" />
+          <End Role="tblAssetDefinition" Type="Self.tblAssetDefinition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAssetType">
+              <PropertyRef Name="assetTypeId" />
+            </Principal>
+            <Dependent Role="tblAssetDefinition">
+              <PropertyRef Name="assetType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblAssetM__asset__1ED998B2">
+          <End Role="tblAssetType" Type="Self.tblAssetType" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblAssetMaster" Type="Self.tblAssetMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAssetType">
+              <PropertyRef Name="assetTypeId" />
+            </Principal>
+            <Dependent Role="tblAssetMaster">
+              <PropertyRef Name="assetType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblAssetM__asset__20C1E124">
+          <End Role="tblAssetDefinition" Type="Self.tblAssetDefinition" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblAssetMaster" Type="Self.tblAssetMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAssetDefinition">
+              <PropertyRef Name="assetId" />
+            </Principal>
+            <Dependent Role="tblAssetMaster">
+              <PropertyRef Name="assetName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblAssetMa__make__1FCDBCEB">
+          <End Role="tblVendor" Type="Self.tblVendor" Multiplicity="0..1" />
+          <End Role="tblAssetMaster" Type="Self.tblAssetMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblVendor">
+              <PropertyRef Name="vendorId" />
+            </Principal>
+            <Dependent Role="tblAssetMaster">
+              <PropertyRef Name="make" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblPurcha__purch__1A14E395">
+          <End Role="tblAssetDefinition" Type="Self.tblAssetDefinition" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblPurchase" Type="Self.tblPurchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAssetDefinition">
+              <PropertyRef Name="assetId" />
+            </Principal>
+            <Dependent Role="tblPurchase">
+              <PropertyRef Name="purchaseAssetName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblPurcha__purch__1B0907CE">
+          <End Role="tblAssetType" Type="Self.tblAssetType" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblPurchase" Type="Self.tblPurchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAssetType">
+              <PropertyRef Name="assetTypeId" />
+            </Principal>
+            <Dependent Role="tblPurchase">
+              <PropertyRef Name="purchaseAssetType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblPurcha__purch__1BFD2C07">
+          <End Role="tblVendor" Type="Self.tblVendor" Multiplicity="0..1" />
+          <End Role="tblPurchase" Type="Self.tblPurchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblVendor">
+              <PropertyRef Name="vendorId" />
+            </Principal>
+            <Dependent Role="tblPurchase">
+              <PropertyRef Name="purchaseVendorName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblUserRe__regId__36B12243">
+          <End Role="tblLogin" Type="Self.tblLogin" Multiplicity="0..1" />
+          <End Role="tblUserReg" Type="Self.tblUserReg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLogin">
+              <PropertyRef Name="loginId" />
+            </Principal>
+            <Dependent Role="tblUserReg">
+              <PropertyRef Name="regId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblVendor__vendo__173876EA">
+          <End Role="tblAssetType" Type="Self.tblAssetType" Multiplicity="0..1" />
+          <End Role="tblVendor" Type="Self.tblVendor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAssetType">
+              <PropertyRef Name="assetTypeId" />
+            </Principal>
+            <Dependent Role="tblVendor">
+              <PropertyRef Name="vendorAssetType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AMSAngularModelStoreContainer">
+          <EntitySet Name="tblAssetDefinition" EntityType="Self.tblAssetDefinition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAssetMaster" EntityType="Self.tblAssetMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAssetType" EntityType="Self.tblAssetType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLogin" EntityType="Self.tblLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPurchase" EntityType="Self.tblPurchase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUserReg" EntityType="Self.tblUserReg" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblVendor" EntityType="Self.tblVendor" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tblAssetD__asset__145C0A3F" Association="Self.FK__tblAssetD__asset__145C0A3F">
+            <End Role="tblAssetType" EntitySet="tblAssetType" />
+            <End Role="tblAssetDefinition" EntitySet="tblAssetDefinition" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblAssetM__asset__1ED998B2" Association="Self.FK__tblAssetM__asset__1ED998B2">
+            <End Role="tblAssetType" EntitySet="tblAssetType" />
+            <End Role="tblAssetMaster" EntitySet="tblAssetMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblAssetM__asset__20C1E124" Association="Self.FK__tblAssetM__asset__20C1E124">
+            <End Role="tblAssetDefinition" EntitySet="tblAssetDefinition" />
+            <End Role="tblAssetMaster" EntitySet="tblAssetMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblAssetMa__make__1FCDBCEB" Association="Self.FK__tblAssetMa__make__1FCDBCEB">
+            <End Role="tblVendor" EntitySet="tblVendor" />
+            <End Role="tblAssetMaster" EntitySet="tblAssetMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblPurcha__purch__1A14E395" Association="Self.FK__tblPurcha__purch__1A14E395">
+            <End Role="tblAssetDefinition" EntitySet="tblAssetDefinition" />
+            <End Role="tblPurchase" EntitySet="tblPurchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblPurcha__purch__1B0907CE" Association="Self.FK__tblPurcha__purch__1B0907CE">
+            <End Role="tblAssetType" EntitySet="tblAssetType" />
+            <End Role="tblPurchase" EntitySet="tblPurchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblPurcha__purch__1BFD2C07" Association="Self.FK__tblPurcha__purch__1BFD2C07">
+            <End Role="tblVendor" EntitySet="tblVendor" />
+            <End Role="tblPurchase" EntitySet="tblPurchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblUserRe__regId__36B12243" Association="Self.FK__tblUserRe__regId__36B12243">
+            <End Role="tblLogin" EntitySet="tblLogin" />
+            <End Role="tblUserReg" EntitySet="tblUserReg" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblVendor__vendo__173876EA" Association="Self.FK__tblVendor__vendo__173876EA">
+            <End Role="tblAssetType" EntitySet="tblAssetType" />
+            <End Role="tblVendor" EntitySet="tblVendor" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AMSAngularModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblAssetDefinition">
+          <Key>
+            <PropertyRef Name="assetId" />
+          </Key>
+          <Property Name="assetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="assetName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="assetType" Type="Int32" />
+          <Property Name="assetClass" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblAssetType" Relationship="Self.FK__tblAssetD__asset__145C0A3F" FromRole="tblAssetDefinition" ToRole="tblAssetType" />
+          <NavigationProperty Name="tblAssetMasters" Relationship="Self.FK__tblAssetM__asset__20C1E124" FromRole="tblAssetDefinition" ToRole="tblAssetMaster" />
+          <NavigationProperty Name="tblPurchases" Relationship="Self.FK__tblPurcha__purch__1A14E395" FromRole="tblAssetDefinition" ToRole="tblPurchase" />
+        </EntityType>
+        <EntityType Name="tblAssetMaster">
+          <Key>
+            <PropertyRef Name="assetMasterId" />
+          </Key>
+          <Property Name="assetMasterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="assetType" Type="Int32" />
+          <Property Name="make" Type="Int32" />
+          <Property Name="assetName" Type="Int32" />
+          <Property Name="model" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="serialnumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="makeYear" Type="DateTime" Precision="0" />
+          <Property Name="purchaseDate" Type="DateTime" Precision="0" />
+          <Property Name="warranty" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="warrantyFrom" Type="DateTime" Precision="0" />
+          <Property Name="warrantyTo" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblAssetDefinition" Relationship="Self.FK__tblAssetM__asset__20C1E124" FromRole="tblAssetMaster" ToRole="tblAssetDefinition" />
+          <NavigationProperty Name="tblAssetType" Relationship="Self.FK__tblAssetM__asset__1ED998B2" FromRole="tblAssetMaster" ToRole="tblAssetType" />
+          <NavigationProperty Name="tblVendor" Relationship="Self.FK__tblAssetMa__make__1FCDBCEB" FromRole="tblAssetMaster" ToRole="tblVendor" />
+        </EntityType>
+        <EntityType Name="tblAssetType">
+          <Key>
+            <PropertyRef Name="assetTypeId" />
+          </Key>
+          <Property Name="assetTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="assetTypeName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblAssetDefinitions" Relationship="Self.FK__tblAssetD__asset__145C0A3F" FromRole="tblAssetType" ToRole="tblAssetDefinition" />
+          <NavigationProperty Name="tblAssetMasters" Relationship="Self.FK__tblAssetM__asset__1ED998B2" FromRole="tblAssetType" ToRole="tblAssetMaster" />
+          <NavigationProperty Name="tblPurchases" Relationship="Self.FK__tblPurcha__purch__1B0907CE" FromRole="tblAssetType" ToRole="tblPurchase" />
+          <NavigationProperty Name="tblVendors" Relationship="Self.FK__tblVendor__vendo__173876EA" FromRole="tblAssetType" ToRole="tblVendor" />
+        </EntityType>
+        <EntityType Name="tblLogin">
+          <Key>
+            <PropertyRef Name="loginId" />
+          </Key>
+          <Property Name="loginId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="usertype" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblUserRegs" Relationship="Self.FK__tblUserRe__regId__36B12243" FromRole="tblLogin" ToRole="tblUserReg" />
+        </EntityType>
+        <EntityType Name="tblPurchase">
+          <Key>
+            <PropertyRef Name="purchaseId" />
+          </Key>
+          <Property Name="purchaseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="purchaseOrderNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="purchaseAssetName" Type="Int32" />
+          <Property Name="purchaseAssetType" Type="Int32" />
+          <Property Name="quantity" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="purchaseVendorName" Type="Int32" />
+          <Property Name="purchaseDate" Type="DateTime" Precision="0" />
+          <Property Name="purchaseDelivDate" Type="DateTime" Precision="0" />
+          <Property Name="purchaseStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblAssetDefinition" Relationship="Self.FK__tblPurcha__purch__1A14E395" FromRole="tblPurchase" ToRole="tblAssetDefinition" />
+          <NavigationProperty Name="tblAssetType" Relationship="Self.FK__tblPurcha__purch__1B0907CE" FromRole="tblPurchase" ToRole="tblAssetType" />
+          <NavigationProperty Name="tblVendor" Relationship="Self.FK__tblPurcha__purch__1BFD2C07" FromRole="tblPurchase" ToRole="tblVendor" />
+        </EntityType>
+        <EntityType Name="tblUserReg">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="lastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="age" Type="Int32" />
+          <Property Name="gender" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="regId" Type="Int32" />
+          <NavigationProperty Name="tblLogin" Relationship="Self.FK__tblUserRe__regId__36B12243" FromRole="tblUserReg" ToRole="tblLogin" />
+        </EntityType>
+        <EntityType Name="tblVendor">
+          <Key>
+            <PropertyRef Name="vendorId" />
+          </Key>
+          <Property Name="vendorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vendorName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vendorType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vendorAssetType" Type="Int32" />
+          <Property Name="validFrom" Type="DateTime" Precision="0" />
+          <Property Name="vaildTo" Type="DateTime" Precision="0" />
+          <Property Name="vendorAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblAssetMasters" Relationship="Self.FK__tblAssetMa__make__1FCDBCEB" FromRole="tblVendor" ToRole="tblAssetMaster" />
+          <NavigationProperty Name="tblAssetType" Relationship="Self.FK__tblVendor__vendo__173876EA" FromRole="tblVendor" ToRole="tblAssetType" />
+          <NavigationProperty Name="tblPurchases" Relationship="Self.FK__tblPurcha__purch__1BFD2C07" FromRole="tblVendor" ToRole="tblPurchase" />
+        </EntityType>
+        <Association Name="FK__tblAssetD__asset__145C0A3F">
+          <End Role="tblAssetType" Type="Self.tblAssetType" Multiplicity="0..1" />
+          <End Role="tblAssetDefinition" Type="Self.tblAssetDefinition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAssetType">
+              <PropertyRef Name="assetTypeId" />
+            </Principal>
+            <Dependent Role="tblAssetDefinition">
+              <PropertyRef Name="assetType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblAssetM__asset__20C1E124">
+          <End Role="tblAssetDefinition" Type="Self.tblAssetDefinition" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblAssetMaster" Type="Self.tblAssetMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAssetDefinition">
+              <PropertyRef Name="assetId" />
+            </Principal>
+            <Dependent Role="tblAssetMaster">
+              <PropertyRef Name="assetName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblPurcha__purch__1A14E395">
+          <End Role="tblAssetDefinition" Type="Self.tblAssetDefinition" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblPurchase" Type="Self.tblPurchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAssetDefinition">
+              <PropertyRef Name="assetId" />
+            </Principal>
+            <Dependent Role="tblPurchase">
+              <PropertyRef Name="purchaseAssetName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblAssetM__asset__1ED998B2">
+          <End Role="tblAssetType" Type="Self.tblAssetType" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblAssetMaster" Type="Self.tblAssetMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAssetType">
+              <PropertyRef Name="assetTypeId" />
+            </Principal>
+            <Dependent Role="tblAssetMaster">
+              <PropertyRef Name="assetType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblAssetMa__make__1FCDBCEB">
+          <End Role="tblVendor" Type="Self.tblVendor" Multiplicity="0..1" />
+          <End Role="tblAssetMaster" Type="Self.tblAssetMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblVendor">
+              <PropertyRef Name="vendorId" />
+            </Principal>
+            <Dependent Role="tblAssetMaster">
+              <PropertyRef Name="make" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblPurcha__purch__1B0907CE">
+          <End Role="tblAssetType" Type="Self.tblAssetType" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblPurchase" Type="Self.tblPurchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAssetType">
+              <PropertyRef Name="assetTypeId" />
+            </Principal>
+            <Dependent Role="tblPurchase">
+              <PropertyRef Name="purchaseAssetType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblVendor__vendo__173876EA">
+          <End Role="tblAssetType" Type="Self.tblAssetType" Multiplicity="0..1" />
+          <End Role="tblVendor" Type="Self.tblVendor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAssetType">
+              <PropertyRef Name="assetTypeId" />
+            </Principal>
+            <Dependent Role="tblVendor">
+              <PropertyRef Name="vendorAssetType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblUserRe__regId__36B12243">
+          <End Role="tblLogin" Type="Self.tblLogin" Multiplicity="0..1" />
+          <End Role="tblUserReg" Type="Self.tblUserReg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLogin">
+              <PropertyRef Name="loginId" />
+            </Principal>
+            <Dependent Role="tblUserReg">
+              <PropertyRef Name="regId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblPurcha__purch__1BFD2C07">
+          <End Role="tblVendor" Type="Self.tblVendor" Multiplicity="0..1" />
+          <End Role="tblPurchase" Type="Self.tblPurchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblVendor">
+              <PropertyRef Name="vendorId" />
+            </Principal>
+            <Dependent Role="tblPurchase">
+              <PropertyRef Name="purchaseVendorName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AMSAngularEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblAssetDefinitions" EntityType="Self.tblAssetDefinition" />
+          <EntitySet Name="tblAssetMasters" EntityType="Self.tblAssetMaster" />
+          <EntitySet Name="tblAssetTypes" EntityType="Self.tblAssetType" />
+          <EntitySet Name="tblLogins" EntityType="Self.tblLogin" />
+          <EntitySet Name="tblPurchases" EntityType="Self.tblPurchase" />
+          <EntitySet Name="tblUserRegs" EntityType="Self.tblUserReg" />
+          <EntitySet Name="tblVendors" EntityType="Self.tblVendor" />
+          <AssociationSet Name="FK__tblAssetD__asset__145C0A3F" Association="Self.FK__tblAssetD__asset__145C0A3F">
+            <End Role="tblAssetType" EntitySet="tblAssetTypes" />
+            <End Role="tblAssetDefinition" EntitySet="tblAssetDefinitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblAssetM__asset__20C1E124" Association="Self.FK__tblAssetM__asset__20C1E124">
+            <End Role="tblAssetDefinition" EntitySet="tblAssetDefinitions" />
+            <End Role="tblAssetMaster" EntitySet="tblAssetMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblPurcha__purch__1A14E395" Association="Self.FK__tblPurcha__purch__1A14E395">
+            <End Role="tblAssetDefinition" EntitySet="tblAssetDefinitions" />
+            <End Role="tblPurchase" EntitySet="tblPurchases" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblAssetM__asset__1ED998B2" Association="Self.FK__tblAssetM__asset__1ED998B2">
+            <End Role="tblAssetType" EntitySet="tblAssetTypes" />
+            <End Role="tblAssetMaster" EntitySet="tblAssetMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblAssetMa__make__1FCDBCEB" Association="Self.FK__tblAssetMa__make__1FCDBCEB">
+            <End Role="tblVendor" EntitySet="tblVendors" />
+            <End Role="tblAssetMaster" EntitySet="tblAssetMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblPurcha__purch__1B0907CE" Association="Self.FK__tblPurcha__purch__1B0907CE">
+            <End Role="tblAssetType" EntitySet="tblAssetTypes" />
+            <End Role="tblPurchase" EntitySet="tblPurchases" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblVendor__vendo__173876EA" Association="Self.FK__tblVendor__vendo__173876EA">
+            <End Role="tblAssetType" EntitySet="tblAssetTypes" />
+            <End Role="tblVendor" EntitySet="tblVendors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblUserRe__regId__36B12243" Association="Self.FK__tblUserRe__regId__36B12243">
+            <End Role="tblLogin" EntitySet="tblLogins" />
+            <End Role="tblUserReg" EntitySet="tblUserRegs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblPurcha__purch__1BFD2C07" Association="Self.FK__tblPurcha__purch__1BFD2C07">
+            <End Role="tblVendor" EntitySet="tblVendors" />
+            <End Role="tblPurchase" EntitySet="tblPurchases" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AMSAngularModelStoreContainer" CdmEntityContainer="AMSAngularEntities1">
+          <EntitySetMapping Name="tblAssetDefinitions">
+            <EntityTypeMapping TypeName="AMSAngularModel.tblAssetDefinition">
+              <MappingFragment StoreEntitySet="tblAssetDefinition">
+                <ScalarProperty Name="assetId" ColumnName="assetId" />
+                <ScalarProperty Name="assetName" ColumnName="assetName" />
+                <ScalarProperty Name="assetType" ColumnName="assetType" />
+                <ScalarProperty Name="assetClass" ColumnName="assetClass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAssetMasters">
+            <EntityTypeMapping TypeName="AMSAngularModel.tblAssetMaster">
+              <MappingFragment StoreEntitySet="tblAssetMaster">
+                <ScalarProperty Name="assetMasterId" ColumnName="assetMasterId" />
+                <ScalarProperty Name="assetType" ColumnName="assetType" />
+                <ScalarProperty Name="make" ColumnName="make" />
+                <ScalarProperty Name="assetName" ColumnName="assetName" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="serialnumber" ColumnName="serialnumber" />
+                <ScalarProperty Name="makeYear" ColumnName="makeYear" />
+                <ScalarProperty Name="purchaseDate" ColumnName="purchaseDate" />
+                <ScalarProperty Name="warranty" ColumnName="warranty" />
+                <ScalarProperty Name="warrantyFrom" ColumnName="warrantyFrom" />
+                <ScalarProperty Name="warrantyTo" ColumnName="warrantyTo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAssetTypes">
+            <EntityTypeMapping TypeName="AMSAngularModel.tblAssetType">
+              <MappingFragment StoreEntitySet="tblAssetType">
+                <ScalarProperty Name="assetTypeId" ColumnName="assetTypeId" />
+                <ScalarProperty Name="assetTypeName" ColumnName="assetTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLogins">
+            <EntityTypeMapping TypeName="AMSAngularModel.tblLogin">
+              <MappingFragment StoreEntitySet="tblLogin">
+                <ScalarProperty Name="loginId" ColumnName="loginId" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="usertype" ColumnName="usertype" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPurchases">
+            <EntityTypeMapping TypeName="AMSAngularModel.tblPurchase">
+              <MappingFragment StoreEntitySet="tblPurchase">
+                <ScalarProperty Name="purchaseId" ColumnName="purchaseId" />
+                <ScalarProperty Name="purchaseOrderNo" ColumnName="purchaseOrderNo" />
+                <ScalarProperty Name="purchaseAssetName" ColumnName="purchaseAssetName" />
+                <ScalarProperty Name="purchaseAssetType" ColumnName="purchaseAssetType" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="purchaseVendorName" ColumnName="purchaseVendorName" />
+                <ScalarProperty Name="purchaseDate" ColumnName="purchaseDate" />
+                <ScalarProperty Name="purchaseDelivDate" ColumnName="purchaseDelivDate" />
+                <ScalarProperty Name="purchaseStatus" ColumnName="purchaseStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUserRegs">
+            <EntityTypeMapping TypeName="AMSAngularModel.tblUserReg">
+              <MappingFragment StoreEntitySet="tblUserReg">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="regId" ColumnName="regId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblVendors">
+            <EntityTypeMapping TypeName="AMSAngularModel.tblVendor">
+              <MappingFragment StoreEntitySet="tblVendor">
+                <ScalarProperty Name="vendorId" ColumnName="vendorId" />
+                <ScalarProperty Name="vendorName" ColumnName="vendorName" />
+                <ScalarProperty Name="vendorType" ColumnName="vendorType" />
+                <ScalarProperty Name="vendorAssetType" ColumnName="vendorAssetType" />
+                <ScalarProperty Name="validFrom" ColumnName="validFrom" />
+                <ScalarProperty Name="vaildTo" ColumnName="vaildTo" />
+                <ScalarProperty Name="vendorAddress" ColumnName="vendorAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

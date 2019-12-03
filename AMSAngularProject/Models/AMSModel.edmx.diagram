@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ce7b50b498124f56984b362d90648c52" Name="Diagram1">
+        <EntityTypeShape EntityType="AMSAngularModel.tblAssetDefinition" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSAngularModel.tblAssetMaster" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSAngularModel.tblAssetType" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSAngularModel.tblLogin" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSAngularModel.tblPurchase" Width="1.5" PointX="8.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSAngularModel.tblUserReg" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSAngularModel.tblVendor" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <AssociationConnector Association="AMSAngularModel.FK__tblAssetD__asset__145C0A3F" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSAngularModel.FK__tblAssetM__asset__20C1E124" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSAngularModel.FK__tblPurcha__purch__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSAngularModel.FK__tblAssetM__asset__1ED998B2" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSAngularModel.FK__tblAssetMa__make__1FCDBCEB" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSAngularModel.FK__tblPurcha__purch__1B0907CE" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSAngularModel.FK__tblVendor__vendo__173876EA" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSAngularModel.FK__tblUserRe__regId__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSAngularModel.FK__tblPurcha__purch__1BFD2C07" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
